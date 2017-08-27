@@ -1,53 +1,58 @@
 
-s = 'Code in Ruby, live longer!'
-print s
-s = s.upper()
-print 
-n = ''
-for letter in s:
-	if letter.isalpha():
-		n += letter
 
-print n
-def split_into_4(s):
-	new_str = str()
-	for count, letter in enumerate(s,1):
-		print letter, count
-		if count % 5 == 0:
-			# Every 5 letters, add space
-			new_str += letter
-			new_str += ' '
-		else:
-			new_str += letter
-
-	return new_str
-
-print split_into_4(n)
-n = split_into_4(n)
-abc = 'abcdefghijklmnopqrstuvwxyz'.upper()
-thedict = {}
-
-for count, letter in enumerate(abc,1):
-	thedict[letter] = count
-
-print thedict
-print thedict['A']
-def convert_to_nums(s, cipher):
-	nums = str()
+def return_alpha(s):
+	ns = str()
 	for letter in s:
 		if letter.isalpha():
-			nums += str(cipher[letter])
-			nums += ' '
+			ns += letter
+	return ns
+
+def split_into_4(s):
+	ns = str()
+	for count, letter in enumerate(s,1):
+		ns += letter
+		if count % 5 == 0:
+			# Every 5 letters, add space
+			ns += ' '
+	return ns
+
+def string_into_numerical_dict(s):
+	ndict = dict()
+
+	for count, letter in enumerate(s,1):
+		ndict[letter] = count
+
+	return ndict
+
+def convert_str_to_num_using_key(s, key):
+	nums = list()
+	for letter in s:
+		if letter.isalpha():
+			nums.append(key[letter])
+			
 
 	return nums
 
-keystream = 'DWJXH YRFDG TMSHP UURXJ'
-anum = convert_to_nums(n, thedict)
-bnum = convert_to_nums(keystream, thedict)
+def app(s, key):
+	s = s.upper()	 
+	s = return_alpha(s)
+	s = split_into_4(s)
+	s = convert_str_to_num_using_key(s, key)
+	return s
 
-print anum
-print bnum
-print anum.split()
-print bnum.split()
-for n in bnum.split():
-	print type(n)
+
+abc = 'abcdefghijklmnopqrstuvwxyz'.upper()
+abckey = string_into_numerical_dict(abc)
+
+s = 'Code in Ruby, live longer!'
+s = app(s, abckey)
+
+keystream = 'DWJXH YRFDG TMSHP UURXJ'
+s2 =  app(keystream, abckey)
+
+
+for i, j in zip(s, s2):
+	temp = i + j
+	if temp > 26:
+		temp = temp-26
+	print temp
